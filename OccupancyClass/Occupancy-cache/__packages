@@ -1,0 +1,10 @@
+base
+knitr
+MuMIn
+reshape
+lattice
+Rcpp
+unmarked
+DiversityOccupancy
+sp
+raster

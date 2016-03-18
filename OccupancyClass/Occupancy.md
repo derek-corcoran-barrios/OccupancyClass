@@ -1,37 +1,34 @@
-Occupancy
+Occupancy Modeling Workshop
 ========================================================
 author: Derek Corcoran
 date: 2016-03-18
 autosize: true
 
-First Slide
+
+
+![plot of chunk unnamed-chunk-1](Occupancy-figure/unnamed-chunk-1-1.png)
+
+
+Fitness or abundance patterns
 ========================================================
+![plot of chunk unnamed-chunk-2](Occupancy-figure/unnamed-chunk-2-1.png)
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+***
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+![plot of chunk unnamed-chunk-3](Occupancy-figure/unnamed-chunk-3-1.png)
 
 Slide With Code
 ========================================================
 
+![plot of chunk unnamed-chunk-4](Occupancy-figure/unnamed-chunk-4-1.png)
 
-```r
-summary(cars)
-```
 
-```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
-
-Slide With Plot
+Two functions
 ========================================================
 
-![plot of chunk unnamed-chunk-2](Occupancy-figure/unnamed-chunk-2-1.png) 
+- Detection probability psi
+- Occupancy probability p
+
+ \( p = 1 -  \left( 1 - p \right)^t \)
+
+ \( \psi = \frac{Sd}{S \times\ p} \)

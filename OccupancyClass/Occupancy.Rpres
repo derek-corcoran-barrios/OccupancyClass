@@ -1,28 +1,61 @@
-Occupancy
+Occupancy Modeling Workshop
 ========================================================
 author: Derek Corcoran
 date: `r Sys.Date()`
 autosize: true
 
-First Slide
+```{r setup, include=FALSE}
+opts_chunk$set(cache=TRUE)
+```
+
+```{r,echo=FALSE}
+library(DiversityOccupancy)
+data("BatOccu")
+data("Dailycov")
+data("sampling.cov")
+BatOccupancy <-batchoccu(pres = BatOccu, sitecov = sampling.cov, obscov = Dailycov,spp = 17, form = ~ Julian + Meanhum + Meantemp + sdhum + sdtemp ~ Burn.intensity.soil + I(Burn.intensity.soil^2) + Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal +I(Burn.intensity.basal^2))
+responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
+```
+
+
+Fitness or abundance patterns
 ========================================================
+```{r, echo=FALSE}
+set.seed(124)
+x1<-c(1:50)
+y1<- x1 + 3 + rnorm(50, 0 , 5)
+plot(y1~x1, xlab = "Environmental Variable 1", ylab = "Abundance")
+abline(lm(y1~x1))
+```
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+***
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+```{r, echo=FALSE}
+set.seed(124)
+x2<-c(1:50)
+y2<- 50*x2 + -1*((x2)^2) + 20 + rnorm(50, 0 , 50)
+plot(y2~x2, xlab = "Environmental Variable 1", ylab = "Abundance")
+a <- glm(y2~ x2+ I(x2^2))
+b <- predict(a, new.data = c(1:50))
+lines(b)
+```
 
 Slide With Code
 ========================================================
 
-```{r}
-summary(cars)
+```{r, echo=FALSE}
+library(raster)
+graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats.jpg")
+plotRGB(graph1)
 ```
 
-Slide With Plot
+
+Two functions
 ========================================================
 
-```{r, echo=FALSE}
-plot(cars)
-```
+- Detection probability psi
+- Occupancy probability p
+
+ \( p = 1 -  \left( 1 - p \right)^t \)
+
+ \( \psi = \frac{Sd}{S \times\ p} \)
