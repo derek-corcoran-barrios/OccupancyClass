@@ -21,7 +21,14 @@ responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil
 
 Fitness or abundance patterns
 ========================================================
-```{r, echo=FALSE}
+
+- Expensive
+- Inexact
+
+
+***
+
+```{r, echo=FALSE, out.height="280px",out.width="280px"}
 set.seed(124)
 x1<-c(1:50)
 y1<- x1 + 3 + rnorm(50, 0 , 5)
@@ -29,9 +36,7 @@ plot(y1~x1, xlab = "Environmental Variable 1", ylab = "Abundance")
 abline(lm(y1~x1))
 ```
 
-***
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.height="280px", out.width="280px"}
 set.seed(124)
 x2<-c(1:50)
 y2<- 50*x2 + -1*((x2)^2) + 20 + rnorm(50, 0 , 50)
@@ -43,12 +48,30 @@ lines(b)
 
 Imperfect detection
 ========================================================
--
 
-***
-```{r, echo=FALSE, dpi=700}
+```{r, echo=FALSE}
 library(raster)
 graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats.jpg")
+plotRGB(graph1)
+```
+
+
+Imperfect detection
+========================================================
+
+```{r, echo=FALSE}
+library(raster)
+graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumasbats2.jpg")
+plotRGB(graph1)
+```
+
+
+Imperfect detection
+========================================================
+
+```{r, echo=FALSE}
+library(raster)
+graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats3.jpg")
 plotRGB(graph1)
 ```
 
@@ -77,10 +100,21 @@ Two functions
 
 p = 0.25
 
-\( p* = 1 -  \left( 1 - 0.25 \right)^3 \) = `r (1-0.25)^3 `
+\( p* = 1 -  \left( 1 - 0.25 \right)^3 \) = `r 1 - (1-0.25)^3 `
 
 S = 100
 
 Sd = 30
 
-\( \psi = \frac{30}{100 \times\ 0.422*} \) = `r 30/(100*(1-(0.25)^3))`
+\( \psi = \frac{30}{100 \times\ 0.578*} \) = `r 30/(100*(1-(0.25)^3))`
+
+Probability of detection
+========================================================
+
+```{r, echo= FALSE}
+t <- c(1:10)
+p <- (1 -(1-0.25)^t)
+
+plot(p ~ t, type = "b")
+
+```

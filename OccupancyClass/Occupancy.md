@@ -12,18 +12,33 @@ autosize: true
 
 Fitness or abundance patterns
 ========================================================
-![plot of chunk unnamed-chunk-2](Occupancy-figure/unnamed-chunk-2-1.png)
+
+- Expensive
+- Inexact
+
 
 ***
 
-![plot of chunk unnamed-chunk-3](Occupancy-figure/unnamed-chunk-3-1.png)
+<img src="Occupancy-figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="280px" height="280px" />
+
+<img src="Occupancy-figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="280px" height="280px" />
 
 Imperfect detection
 ========================================================
--
 
-***
 ![plot of chunk unnamed-chunk-4](Occupancy-figure/unnamed-chunk-4-1.png)
+
+
+Imperfect detection
+========================================================
+
+![plot of chunk unnamed-chunk-5](Occupancy-figure/unnamed-chunk-5-1.png)
+
+
+Imperfect detection
+========================================================
+
+![plot of chunk unnamed-chunk-6](Occupancy-figure/unnamed-chunk-6-1.png)
 
 
 Two functions
@@ -50,10 +65,15 @@ Two functions
 
 p = 0.25
 
-\( p* = 1 -  \left( 1 - 0.25 \right)^3 \) = 0.421875
+\( p* = 1 -  \left( 1 - 0.25 \right)^3 \) = 0.578125
 
 S = 100
 
 Sd = 30
 
-\( \psi = \frac{30}{100 \times\ 0.422*} \) = 0.3047619
+\( \psi = \frac{30}{100 \times\ 0.578*} \) = 0.3047619
+
+Probability of detection
+========================================================
+
+![plot of chunk unnamed-chunk-7](Occupancy-figure/unnamed-chunk-7-1.png)
