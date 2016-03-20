@@ -1,4 +1,4 @@
-Occupancy Modeling Workshop
+Occupancy Modeling
 ========================================================
 author: Derek Corcoran
 date: `r Sys.Date()`
@@ -8,7 +8,8 @@ autosize: true
 opts_chunk$set(cache=TRUE)
 ```
 
-```{r,echo=FALSE}
+
+```{r,echo=FALSE,out.height="320px",out.width="320px"}
 library(DiversityOccupancy)
 data("BatOccu")
 data("Dailycov")
@@ -40,10 +41,12 @@ b <- predict(a, new.data = c(1:50))
 lines(b)
 ```
 
-Slide With Code
+Imperfect detection
 ========================================================
+-
 
-```{r, echo=FALSE}
+***
+```{r, echo=FALSE, dpi=700}
 library(raster)
 graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats.jpg")
 plotRGB(graph1)
@@ -52,10 +55,32 @@ plotRGB(graph1)
 
 Two functions
 ========================================================
+ \( p* = 1 -  \left( 1 - p \right)^t \)
+
+ \( \psi = \frac{Sd}{S \times\ p*} \)
+
+***
 
 - Detection probability psi
-- Occupancy probability p
+- Occupancy probability p given prsence
+- p* probability to detect at least one time in t surveys
+- S number of surveyed sites
+- Sd number of sites where species is detected
 
- \( p = 1 -  \left( 1 - p \right)^t \)
+Two functions
+========================================================
+ \( p* = 1 -  \left( 1 - p \right)^t \)
 
- \( \psi = \frac{Sd}{S \times\ p} \)
+ \( \psi = \frac{Sd}{S \times\ p*} \)
+
+***
+
+p = 0.25
+
+\( p* = 1 -  \left( 1 - 0.25 \right)^3 \) = `r (1-0.25)^3 `
+
+S = 100
+
+Sd = 30
+
+\( \psi = \frac{30}{100 \times\ 0.422*} \) = `r 30/(100*(1-(0.25)^3))`
