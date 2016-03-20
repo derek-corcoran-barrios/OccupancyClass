@@ -22,21 +22,17 @@ responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil
 Fitness or abundance patterns
 ========================================================
 
-- Expensive
-- Inexact
+- Time consuming
+- Hard to replicate
+- Almost impossible in rare species
+- Need to be able to detect the species
+- Species might be there but not detected
+- false absences might bias estimates
 
 
 ***
 
-```{r, echo=FALSE, out.height="280px",out.width="280px"}
-set.seed(124)
-x1<-c(1:50)
-y1<- x1 + 3 + rnorm(50, 0 , 5)
-plot(y1~x1, xlab = "Environmental Variable 1", ylab = "Abundance")
-abline(lm(y1~x1))
-```
-
-```{r, echo=FALSE, out.height="280px", out.width="280px"}
+```{r, echo=FALSE}
 set.seed(124)
 x2<-c(1:50)
 y2<- 50*x2 + -1*((x2)^2) + 20 + rnorm(50, 0 , 50)
@@ -48,6 +44,15 @@ lines(b)
 
 Imperfect detection
 ========================================================
+- Detection is usually not perfect
+- Depends on:
+  + Species
+  + Season
+  + Observer
+  + Method
+  + Weather
+  
+***
 
 ```{r, echo=FALSE}
 library(raster)
@@ -59,6 +64,16 @@ plotRGB(graph1)
 Imperfect detection
 ========================================================
 
+- Detection is usually not perfect
+- Depends on:
+  + Species
+  + Season
+  + Observer
+  + Method
+  + Weather
+  
+***
+
 ```{r, echo=FALSE}
 library(raster)
 graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumasbats2.jpg")
@@ -69,12 +84,35 @@ plotRGB(graph1)
 Imperfect detection
 ========================================================
 
+- Detection is usually not perfect
+- Depends on:
+  + Species
+  + Season
+  + Observer
+  + Method
+  + Weather
+  
+***
+
 ```{r, echo=FALSE}
 library(raster)
-graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats3.jpg")
+graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats3.png")
 plotRGB(graph1)
 ```
 
+Occupancy modeling
+========================================================
+
+- Fraction of habitat occupied by species
+- If occupancy 0.4 expected 4 of 10 patches used
+- Single season occupancy modeling
+- Multiple season occupancy modeling
+- Abundance from occupancy modeling
+- Occupancy modeling with false positives
+
+***
+
+![guan](https://cienciaustral.files.wordpress.com/2015/11/unnamed-chunk-7-1.png?w=736)
 
 Two functions
 ========================================================
@@ -85,7 +123,7 @@ Two functions
 ***
 
 - Detection probability psi
-- Occupancy probability p given prsence
+- Occupancy probability p given presence
 - p* probability to detect at least one time in t surveys
 - S number of surveyed sites
 - Sd number of sites where species is detected
@@ -118,3 +156,50 @@ p <- (1 -(1-0.25)^t)
 plot(p ~ t, type = "b")
 
 ```
+
+More repeated sampling p* ~ 1
+
+So you want to do Occupancy modeling
+========================================================
+
+- Species detection history
+  + eg. 0 1 0
+- Detection covariates
+  + One measurement for every sampling period
+  + must be thought to change detection
+  + eg date, observer, detection method, humdity
+- Occupancy covariates
+  + One measurement per site
+  + Stable through all sampling
+  + eg Altitude, canopy cover
+  
+  ***
+  
+  ![fig](https://cienciaustral.files.wordpress.com/2015/11/img_0682.jpg?w=700&h=)
+  
+Assumptions of occupancy modeling
+========================================================
+
+- Closure:  No changes in occupancy between surveys
+- [No false positives](http://www.srs.fs.usda.gov/pubs/ja/2015/ja_2015_ferguson_001.pdf): detecting a species when it is not present, can occur
+through  species  misidentification
+
+***
+
+![coso](https://cienciaustral.files.wordpress.com/2015/07/img_05941.jpg?w=364&h=485&crop=1)
+
+
+Package DiversityOccupancy
+========================================================
+
+Advantages
+
+- Batch modeling for several species
+- Calculate diversity
+- Graphical outcomes
+- Selecting [priority areas](http://rpubs.com/derek_corcoran/DiversityOccupancy) from Diversity and individual species abundance
+
+***
+
+![mist](https://pixabay.com/static/uploads/photo/2015/11/28/01/14/birds-1066650_960_720.jpg)
+
