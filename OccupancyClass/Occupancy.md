@@ -126,17 +126,16 @@ More repeated sampling p* ~ 1
 
 So you want to do Occupancy modeling
 ========================================================
+left: 70%
 
 - Species detection history
   + eg. 0 1 0
 - Detection covariates
   + One measurement for every sampling period
-  + must be thought to change detection
   + eg date, observer, detection method, humdity
 - Occupancy covariates
   + One measurement per site
-  + Stable through all sampling
-  + eg Altitude, canopy cover
+  + Stable through all sampling (Altitude, canopy cover)
   
   ***
   
@@ -168,3 +167,25 @@ Advantages
 
 ![mist](https://pixabay.com/static/uploads/photo/2015/11/28/01/14/birds-1066650_960_720.jpg)
 
+
+Data structure
+========================================================
+
+- Pres: A data frame with detection history
+- Obscov: A list of dataframes with detection covariates
+- Sitecov: A data frame with occupancy covariates
+
+***
+
+![data](Data.png)
+
+Data structure
+========================================================
+
+- Pres: A data frame with detection history
+- Obscov: A list of dataframes with detection covariates
+- Sitecov: A data frame with occupancy covariates
+
+***
+
+![data](Data.png)
