@@ -202,6 +202,15 @@ Literature
 
 ![book](http://ecx.images-amazon.com/images/I/51Q3tQovyLL._SX311_BO1,204,203,200_.jpg)
 
+Niche modeling
+========================================================
+- Alternative to occupancy
+- When detection ~ perfect
+- [Almost every algorithm uses pseudoabsenses](https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf)
+
+***
+
+![niche](https://www.unil.ch/webdav/site/idyst/shared/modeling.png)
 
 Package DiversityOccupancy
 ========================================================
@@ -482,3 +491,24 @@ plot(Selected.area$diversity.raster, colNA = "black")
 ```{r}
 plot(Selected.area$species, colNA = "black")
 ```
+
+
+Package unmarked
+========================================================
+
+Advantages
+
+- Finer control
+- Modeling with false positives
+- Dynamic occupancy modeling
+
+Cons
+
+- More work to use data
+- No Diversity modeling
+- No graphical output
+- No automatica model selection
+
+***
+
+![mist](https://pixabay.com/static/uploads/photo/2015/11/28/01/14/birds-1066650_960_720.jpg)
