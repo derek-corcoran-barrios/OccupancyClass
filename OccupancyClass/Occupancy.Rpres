@@ -6,7 +6,7 @@ font-size: 1em;
 
 Occupancy Modeling
 ========================================================
-author: Derek Corcoran
+author: Derek Corcoran derek.corcoran.barrios@gmail.com
 date: `r Sys.Date()`
 autosize: true
 transition: rotate
@@ -215,12 +215,19 @@ Niche modeling
 Package DiversityOccupancy
 ========================================================
 
-Advantages
+<small>Advantages
 
 - Batch modeling for several species
 - Calculate diversity
 - Graphical outcomes
 - Selecting [priority areas](http://rpubs.com/derek_corcoran/DiversityOccupancy) from Diversity and individual species abundance
+- Automatic model selection
+
+Cons
+
+- No false positive occupancy modeling (yet!)
+- No dynamic occupancy modeling (yet!)
+- Automatic model selection </small>
 
 ***
 
@@ -511,4 +518,64 @@ Cons
 
 ***
 
-![mist](https://pixabay.com/static/uploads/photo/2015/11/28/01/14/birds-1066650_960_720.jpg)
+![mist2](http://gallery.usgs.gov/images/04_13_2010/q7LWo00nn2_04_13_2010/large/05.jpg)
+
+Data preparation
+========================================================
+class: small-code
+<small>- Almost the same as in **DiversityOccupancy**
+- One detection history file per species
+- Gather them in a *unmarkedFrameOccu*
+</small>
+```{r, echo = TRUE}
+BatOccupancy <- read.csv("~/Documents/OccupancyClass/OccupancyClass/Data/BatOccu.csv", row.names=1)
+head(BatOccupancy[,1:12], 3)
+MyyuOccupancy <- BatOccupancy[,1:3]
+head(MyyuOccupancy, 3)
+```
+
+Data preparation
+========================================================
+class: small-code
+<small>- Detection and Occupancy covariates work the same as in **DiversityOccupancy**
+- Gather them in a *unmarkedFrameOccu*
+</small>
+```{r, echo = TRUE}
+library(unmarked)
+SimOccuMyYu <- unmarkedFrameOccu(y = MyyuOccupancy, siteCovs = sampling.cov , obsCovs = Dailycov)
+```
+
+***
+```{r}
+plot(SimOccuMyYu)
+```
+
+Occupancy modeling with unmarked
+========================================================
+class: small-code
+<small> Repeat for every species </small>
+```{r}
+model.Occu.My.Yu <- occu(~ Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2), SimOccuMyYu) 
+summary(model.Occu.My.Yu)
+```
+
+Occupancy modeling with unmarked
+========================================================
+class: small-code
+```{r}
+plot(model.Occu.My.Yu)
+```
+
+Model selection
+========================================================
+class: small-code
+```{r}
+model.Occu.My.Yu1 <- occu(~ Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2), SimOccuMyYu) 
+model.Occu.My.Yu <- occu(~ 1 ~ 1, SimOccuMyYu) 
+model.Occu.My.Yu2 <- occu(~ Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + Burn.intensity.basal, SimOccuMyYu) 
+fl <- fitList(Full=model.Occu.My.Yu1, linear=model.Occu.My.Yu2, Null=model.Occu.My.Yu)
+ms <- modSel(fl, nullmod="Null")
+ms
+```
+
+Set every model you need

@@ -6,7 +6,7 @@ font-size: 1em;
 
 Occupancy Modeling
 ========================================================
-author: Derek Corcoran
+author: Derek Corcoran derek.corcoran.barrios@gmail.com
 date: 2016-03-23
 autosize: true
 transition: rotate
@@ -183,12 +183,19 @@ Niche modeling
 Package DiversityOccupancy
 ========================================================
 
-Advantages
+<small>Advantages
 
 - Batch modeling for several species
 - Calculate diversity
 - Graphical outcomes
 - Selecting [priority areas](http://rpubs.com/derek_corcoran/DiversityOccupancy) from Diversity and individual species abundance
+- Automatic model selection
+
+Cons
+
+- No false positive occupancy modeling (yet!)
+- No dynamic occupancy modeling (yet!)
+- Automatic model selection </small>
 
 ***
 
@@ -928,4 +935,127 @@ Cons
 
 ***
 
-![mist](https://pixabay.com/static/uploads/photo/2015/11/28/01/14/birds-1066650_960_720.jpg)
+![mist2](http://gallery.usgs.gov/images/04_13_2010/q7LWo00nn2_04_13_2010/large/05.jpg)
+
+Data preparation
+========================================================
+class: small-code
+<small>- Almost the same as in **DiversityOccupancy**
+- One detection history file per species
+- Gather them in a *unmarkedFrameOccu*
+</small>
+
+```r
+BatOccupancy <- read.csv("~/Documents/OccupancyClass/OccupancyClass/Data/BatOccu.csv", row.names=1)
+head(BatOccupancy[,1:12], 3)
+```
+
+```
+  Myyu1 Myyu2 Myyu3 Myca1 Myca2 Myca3 Myci1 Myci2 Myci3 Myvo1 Myvo2 Myvo3
+1     0     0     0     0     0     0     0     0     0     0     0     0
+2     1     0     0     1     0     0     0     0     0     1     0     0
+3     0     0     0     0     1     0     0     0     0     0     0     0
+```
+
+```r
+MyyuOccupancy <- BatOccupancy[,1:3]
+head(MyyuOccupancy, 3)
+```
+
+```
+  Myyu1 Myyu2 Myyu3
+1     0     0     0
+2     1     0     0
+3     0     0     0
+```
+
+Data preparation
+========================================================
+class: small-code
+<small>- Detection and Occupancy covariates work the same as in **DiversityOccupancy**
+- Gather them in a *unmarkedFrameOccu*
+</small>
+
+```r
+library(unmarked)
+SimOccuMyYu <- unmarkedFrameOccu(y = MyyuOccupancy, siteCovs = sampling.cov , obsCovs = Dailycov)
+```
+
+***
+
+```r
+plot(SimOccuMyYu)
+```
+
+![plot of chunk unnamed-chunk-35](Occupancy-figure/unnamed-chunk-35-1.png)
+
+Occupancy modeling with unmarked
+========================================================
+class: small-code
+<small> Repeat for every species </small>
+
+```r
+model.Occu.My.Yu <- occu(~ Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2), SimOccuMyYu) 
+summary(model.Occu.My.Yu)
+```
+
+```
+
+Call:
+occu(formula = ~Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + 
+    I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2), 
+    data = SimOccuMyYu)
+
+Occupancy (logit-scale):
+                           Estimate      SE     z P(>|z|)
+(Intercept)                    -1.3   0.839 -1.55   0.120
+Burn.intensity.Canopy         148.4 111.760  1.33   0.184
+I(Burn.intensity.Canopy^2)    -20.5  19.623 -1.05   0.295
+Burn.intensity.basal         -112.1  85.498 -1.31   0.190
+I(Burn.intensity.basal^2)      11.9  11.761  1.01   0.313
+
+Detection (logit-scale):
+            Estimate    SE     z  P(>|z|)
+(Intercept)   -1.357 0.333 -4.07 4.71e-05
+Julian         0.359 0.322  1.11 2.65e-01
+Meanhum        0.511 0.338  1.51 1.31e-01
+Meantemp       0.428 0.299  1.43 1.53e-01
+
+AIC: 103.9714 
+Number of sites: 49
+optim convergence code: 1
+optim iterations: 171 
+Bootstrap iterations: 0 
+```
+
+Occupancy modeling with unmarked
+========================================================
+class: small-code
+
+```r
+plot(model.Occu.My.Yu)
+```
+
+![plot of chunk unnamed-chunk-37](Occupancy-figure/unnamed-chunk-37-1.png)
+
+Model selection
+========================================================
+class: small-code
+
+```r
+model.Occu.My.Yu1 <- occu(~ Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2), SimOccuMyYu) 
+model.Occu.My.Yu <- occu(~ 1 ~ 1, SimOccuMyYu) 
+model.Occu.My.Yu2 <- occu(~ Julian + Meanhum + Meantemp ~ Burn.intensity.Canopy + Burn.intensity.basal, SimOccuMyYu) 
+fl <- fitList(Full=model.Occu.My.Yu1, linear=model.Occu.My.Yu2, Null=model.Occu.My.Yu)
+ms <- modSel(fl, nullmod="Null")
+ms
+```
+
+```
+       nPars    AIC delta AICwt cumltvWt  Rsq
+Full       9 103.97  0.00  0.50     0.50 0.32
+linear     7 104.71  0.74  0.34     0.84 0.24
+Null       2 106.24  2.26  0.16     1.00 0.00
+```
+
+Set every model you need
