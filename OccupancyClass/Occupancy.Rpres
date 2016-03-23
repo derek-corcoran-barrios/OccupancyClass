@@ -1,8 +1,15 @@
+<style>
+.small-code pre code {
+font-size: 1em;
+}
+</style>
+
 Occupancy Modeling
 ========================================================
 author: Derek Corcoran
 date: `r Sys.Date()`
 autosize: true
+transition: rotate
 
 ```{r setup, include=FALSE}
 opts_chunk$set(cache=TRUE)
@@ -21,6 +28,7 @@ responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil
 
 Fitness or abundance patterns
 ========================================================
+incremental: true
 
 - Time consuming
 - Hard to replicate
@@ -76,39 +84,19 @@ Imperfect detection
 
 ```{r, echo=FALSE}
 library(raster)
-graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumasbats2.jpg")
-plotRGB(graph1)
-```
-
-
-Imperfect detection
-========================================================
-
-- Detection is usually not perfect
-- Depends on:
-  + Species
-  + Season
-  + Observer
-  + Method
-  + Weather
-  
-***
-
-```{r, echo=FALSE}
-library(raster)
 graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats3.png")
 plotRGB(graph1)
 ```
 
 Occupancy modeling
 ========================================================
+incremental: true
 
-- Fraction of habitat occupied by species
-- If occupancy 0.4 expected 4 of 10 patches used
-- Single season occupancy modeling
-- Multiple season occupancy modeling
-- Abundance from occupancy modeling
-- Occupancy modeling with false positives
+- Fraction of habitat occupied by species (If occupancy 0.4 expected 4 of 10 patches used)
+    + Single season occupancy modeling
+    + Multiple season occupancy modeling
+    + Abundance from occupancy modeling
+    + Occupancy modeling with false positives
 
 ***
 
@@ -149,11 +137,12 @@ Sd = 30
 Probability of detection
 ========================================================
 
-```{r, echo= FALSE}
-t <- c(1:10)
+```{r, echo= FALSE,out.height="400px",out.width="400px"}
+t <- c(1:12)
 p <- (1 -(1-0.25)^t)
 
 plot(p ~ t, type = "b")
+lines(abline(h=0.95, lty= 2, lwd = 2))
 
 ```
 
@@ -162,12 +151,13 @@ More repeated sampling p* ~ 1
 So you want to do Occupancy modeling
 ========================================================
 left: 70%
+incremental: true
 
 - Species detection history
   + eg. 0 1 0
 - Detection covariates
   + One measurement for every sampling period
-  + eg date, observer, detection method, humdity
+  + eg date, observer, detection method, humidity
 - Occupancy covariates
   + One measurement per site
   + Stable through all sampling (Altitude, canopy cover)
@@ -205,22 +195,163 @@ Advantages
 
 Data structure
 ========================================================
+incremental: true
 
 - Pres: A data frame with detection history
-- Obscov: A list of dataframes with detection covariates
+- Obscov: A list of data frames with detection covariates
 - Sitecov: A data frame with occupancy covariates
 
 ***
 
 ![data](Data.png)
 
-Data structure
+
+Detection history
 ========================================================
 
-- Pres: A data frame with detection history
-- Obscov: A list of dataframes with detection covariates
-- Sitecov: A data frame with occupancy covariates
+```{r, echo = TRUE}
+BatOccupancy <- read.csv("~/Documents/OccupancyClass/OccupancyClass/Data/BatOccu.csv", row.names=1)
+head(BatOccupancy[,1:6], 6)
+```
+
+
+Occupancy covariates
+========================================================
+class: small-code
+
+```{r, echo = TRUE}
+OccuCov <- read.csv("~/Documents/OccupancyClass/OccupancyClass/Data/OccuCov.csv", row.names=1)
+head(OccuCov[,1:3], 6)
+```
+
+Detection covariates
+========================================================
+class: small-code
+
+```{r, echo = TRUE}
+DetCov <- read.csv("~/Documents/OccupancyClass/OccupancyClass/Data/DetCov.csv", row.names=1)
+head(DetCov[,1:6], 3)
+class(DetCov)
+```
+
+Detection covariates
+========================================================
+
+```{r, echo = FALSE} 
+library(knitr)
+kable(head(DetCov, 4))
+```
+
+- Remember we need our Detection Variables to be a list!!
+
+
+Detection covariates
+========================================================
+class: small-code
+
+```{r, echo = TRUE} 
+Julian <- DetCov[,1:3]
+MaxHum <- DetCov[,4:6]
+MaxTemp<- DetCov[,7:9]
+DetCov <- list(Julian, MaxHum, MaxTemp)
+str(DetCov)
+```
+
+Detection covariates
+========================================================
+- R needs to be able to **call** the data frames in our list
+```{r, echo = TRUE} 
+names(DetCov)
+names(DetCov) <- c("julian", "maxhum", "maxtemp")
+names(DetCov)
+```
+
+Modeling using DiversityOccupancy
+========================================================
+incremental: true
+
+batchoccu(pres, sitecov, obscov, spp, form)
+
+- **pres**: Detection history data.frame
+- **sitecov**: Occupancy covariates data.frame
+- **obscov**: Detection covariates List of data.frames *with Names*
+- **spp**: the number of species in the pres data.frame
+- **form**: formula in the format ~ obscov ~ sitcov 
+
+Remember, we need p to calculate psi (detection before occupancy)
+
+Modeling using DiversityOccupancy
+========================================================
+class: small-code
+
+```{r, echo=FALSE}
+library(DiversityOccupancy)
+library(raster)
+```
+
+```{r, echo=TRUE}
+BatOccupancy <-batchoccu(pres = BatOccu, sitecov = sampling.cov, obscov = Dailycov,spp = 17, form = ~ Julian + Meanhum + Meantemp + sdhum + sdtemp ~ Burn.intensity.soil + I(Burn.intensity.soil^2) + Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2))
+names(BatOccupancy)
+summary(BatOccupancy$fit)
+```
+
+
+
+Modeling using DiversityOccupancy
+========================================================
+class: small-code
+
+```{r, echo=TRUE}
+BatOccupancy$models[[2]]
+```
+
+Plotting Occupancy response
+========================================================
+class: small-code
+
+```{r, echo=TRUE}
+responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
+```
 
 ***
 
-![data](Data.png)
+- Model, Variable, and Species
+- responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
+
+
+Model selection
+========================================================
+class: small-code
+
+```{r, echo=TRUE}
+BatOccupancy2 <- batchoccu(pres = BatOccu[,1:9], sitecov = sampling.cov, obscov = Dailycov,spp = 3, form = ~ Meanhum + Meantemp ~  Burn.intensity.basal + I(Burn.intensity.basal^2), dredge = TRUE)
+BatOccupancy2$models[[3]]
+```
+
+Predictions
+========================================================
+class: small-code
+
+Again we can do see at individual variables:
+
+```{r, echo = TRUE}
+responseplot.occu(batch = BatOccupancy2, spp = 3, variable = Burn.intensity.basal)
+```
+
+Predictions
+========================================================
+class: small-code
+
+What if we have spatial data
+
+```{r, echo= TRUE}
+library(raster)
+plot(plumas.stack)
+```
+***
+
+```{r, echo=TRUE}
+Occupancy.stack <- occupancy.predict(batch = BatOccupancy2, new.data =
+plumas.stack)
+plot(Occupancy.stack)
+```
