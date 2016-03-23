@@ -107,6 +107,10 @@ Two functions
  \( p* = 1 -  \left( 1 - p \right)^t \)
 
  \( \psi = \frac{Sd}{S \times\ p*} \)
+ 
+ 
+ \( \psi = \frac{exp(Cov \times\ \beta)}{1 + exp(Cov \times\ \beta)} \)
+
 
 ***
 
@@ -176,6 +180,27 @@ through  species  misidentification
 ***
 
 ![coso](https://cienciaustral.files.wordpress.com/2015/07/img_05941.jpg?w=364&h=485&crop=1)
+
+Special cases of occupancy modeling
+========================================================
+
+- [Dynamic occupancy modeling](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3892356/)
+- [Occupancy modeling with false positives](https://www.uvm.edu/rsenr/vtcfwru/spreadsheets/occupancy/Occupancy%20Exercises/Exercise12/Royle_Link_2006.pdf)
+- [Abundance from occupancy](https://www.uvm.edu/rsenr/vtcfwru/spreadsheets/occupancy/Occupancy%20Exercises/Exercise7/RoyleNichols2003.pdf)
+
+***
+Bled et al Ecol Evol. 2013 Dec; 3(15): 4896–4909. 
+![dynamic](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3892356/bin/ece30003-4896-f1.jpg)
+
+Literature
+========================================================
+- [MacKenzie's book](http://www.amazon.com/Occupancy-Estimation-Modeling-Inferring-Occurrence/dp/0120887665)
+- [MacKenzie et al 2002 ecology paper](https://www.uvm.edu/rsenr/vtcfwru/spreadsheets/occupancy/Occupancy%20Exercises/Exercise3/MacKenzie%20et%20al.%20single-season.pdf)
+
+
+***
+
+![book](http://ecx.images-amazon.com/images/I/51Q3tQovyLL._SX311_BO1,204,203,200_.jpg)
 
 
 Package DiversityOccupancy
@@ -427,7 +452,7 @@ responseplot.diver(glm.diversity, variable = Burn.intensity.Canopy)
 Selecting conservation areas based on diversity and abundance
 ========================================================
 class: small-code
-
+[Full tutorial](http://rpubs.com/derek_corcoran/DiversityOccupancy)
 ```{r}
 Selected.area <- diversity.predict(model = BatAbundance, diverse = glm.diversity,
 new.data = little.plumas, quantile.nth = 0.85, species =
