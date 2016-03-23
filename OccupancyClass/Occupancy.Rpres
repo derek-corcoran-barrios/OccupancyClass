@@ -88,15 +88,32 @@ graph1<-stack("~/Documents/OccupancyClass/OccupancyClass/Plumas bats3.png")
 plotRGB(graph1)
 ```
 
+How to sample for occupancy modeling
+========================================================
+incremental: true
+ ![sites](unnamed-chunk-131-1.png)
+ 
+***
+
+<small>
+- repeated detection attempts
+- Sampling site 1
+  + Day 1 not detected
+  + Day 2 detected
+  + Day 3 detected
+  + detection history 0 1 1
+- Sampling site 2
+  + Day 1 detected
+  + Day 2 not detected
+  + Day 3 not detected
+  + detection history 1 0 0</small>
+
+
 Occupancy modeling
 ========================================================
 incremental: true
 
 - Fraction of habitat occupied by species (If occupancy 0.4 expected 4 of 10 patches used)
-    + Single season occupancy modeling
-    + Multiple season occupancy modeling
-    + Abundance from occupancy modeling
-    + Occupancy modeling with false positives
 
 ***
 
@@ -136,7 +153,7 @@ S = 100
 
 Sd = 30
 
-\( \psi = \frac{30}{100 \times\ 0.578*} \) = `r 30/(100*(1-(0.25)^3))`
+\( \psi = \frac{30}{100 \times\ 0.578} \) = `r 30/(100*((1-0.25)^3))`
 
 Probability of detection
 ========================================================
@@ -216,15 +233,14 @@ Package DiversityOccupancy
 ========================================================
 
 <small>Advantages
-
 - Batch modeling for several species
 - Calculate diversity
 - Graphical outcomes
 - Selecting [priority areas](http://rpubs.com/derek_corcoran/DiversityOccupancy) from Diversity and individual species abundance
 - Automatic model selection
 
-Cons
 
+Cons
 - No false positive occupancy modeling (yet!)
 - No dynamic occupancy modeling (yet!)
 - Automatic model selection </small>
@@ -275,16 +291,7 @@ head(DetCov[,1:6], 3)
 class(DetCov)
 ```
 
-Detection covariates
-========================================================
-
-```{r, echo = FALSE} 
-library(knitr)
-kable(head(DetCov, 4))
-```
-
 - Remember we need our Detection Variables to be a list!!
-
 
 Detection covariates
 ========================================================
@@ -317,7 +324,7 @@ batchoccu(pres, sitecov, obscov, spp, form)
 - **sitecov**: Occupancy covariates data.frame
 - **obscov**: Detection covariates List of data.frames *with Names*
 - **spp**: the number of species in the pres data.frame
-- **form**: formula in the format ~ obscov ~ sitcov 
+- **form**: formula in the format ~ obscov ~ sitecov 
 
 Remember, we need p to calculate psi (detection before occupancy)
 
@@ -366,11 +373,9 @@ BatOccupancy2 <- batchoccu(pres = BatOccu[,1:9], sitecov = sampling.cov, obscov 
 BatOccupancy2$models[[3]]
 ```
 
-Predictions
+Again we can do see at individual variables:
 ========================================================
 class: small-code
-
-Again we can do see at individual variables:
 
 ```{r, echo = TRUE}
 responseplot.occu(batch = BatOccupancy2, spp = 3, variable = Burn.intensity.basal)

@@ -63,15 +63,32 @@ Imperfect detection
 
 ![plot of chunk unnamed-chunk-4](Occupancy-figure/unnamed-chunk-4-1.png)
 
+How to sample for occupancy modeling
+========================================================
+incremental: true
+ ![sites](unnamed-chunk-131-1.png)
+ 
+***
+
+<small>
+- repeated detection attempts
+- Sampling site 1
+  + Day 1 not detected
+  + Day 2 detected
+  + Day 3 detected
+  + detection history 0 1 1
+- Sampling site 2
+  + Day 1 detected
+  + Day 2 not detected
+  + Day 3 not detected
+  + detection history 1 0 0</small>
+
+
 Occupancy modeling
 ========================================================
 incremental: true
 
 - Fraction of habitat occupied by species (If occupancy 0.4 expected 4 of 10 patches used)
-    + Single season occupancy modeling
-    + Multiple season occupancy modeling
-    + Abundance from occupancy modeling
-    + Occupancy modeling with false positives
 
 ***
 
@@ -111,7 +128,7 @@ S = 100
 
 Sd = 30
 
-\( \psi = \frac{30}{100 \times\ 0.578*} \) = 0.3047619
+\( \psi = \frac{30}{100 \times\ 0.578} \) = 0.7111111
 
 Probability of detection
 ========================================================
@@ -184,15 +201,14 @@ Package DiversityOccupancy
 ========================================================
 
 <small>Advantages
-
 - Batch modeling for several species
 - Calculate diversity
 - Graphical outcomes
 - Selecting [priority areas](http://rpubs.com/derek_corcoran/DiversityOccupancy) from Diversity and individual species abundance
 - Automatic model selection
 
-Cons
 
+Cons
 - No false positive occupancy modeling (yet!)
 - No dynamic occupancy modeling (yet!)
 - Automatic model selection </small>
@@ -280,19 +296,7 @@ class(DetCov)
 [1] "data.frame"
 ```
 
-Detection covariates
-========================================================
-
-
-|   Julian1|   Julian2|   Julian3|   max.hum1|   max.hum2|  max.hum3|  max.temp1|  max.temp2|  max.temp3|
-|---------:|---------:|---------:|----------:|----------:|---------:|----------:|----------:|----------:|
-| -1.683391| -1.683391| -1.683019|  0.5055974|  1.2023565|  1.120956|  1.0693379| -0.0153524| -1.3657181|
-| -1.620723| -1.620723| -1.620362|  1.0675811|  1.2023565|  1.120956| -0.6327224| -1.2512231| -0.2918201|
-| -1.684443| -1.684443| -1.684071| -0.0563863|  0.7919892|  1.120956|  1.5799560| -0.3684583| -1.3657181|
-| -1.557310| -1.557310| -1.556958|  1.0675811| -0.6670948| -1.131374| -1.4837526|  1.2205182|  1.4980099|
-
 - Remember we need our Detection Variables to be a list!!
-
 
 Detection covariates
 ========================================================
@@ -354,7 +358,7 @@ batchoccu(pres, sitecov, obscov, spp, form)
 - **sitecov**: Occupancy covariates data.frame
 - **obscov**: Detection covariates List of data.frames *with Names*
 - **spp**: the number of species in the pres data.frame
-- **form**: formula in the format ~ obscov ~ sitcov 
+- **form**: formula in the format ~ obscov ~ sitecov 
 
 Remember, we need p to calculate psi (detection before occupancy)
 
@@ -463,7 +467,7 @@ class: small-code
 responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
 ```
 
-![plot of chunk unnamed-chunk-15](Occupancy-figure/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-14](Occupancy-figure/unnamed-chunk-14-1.png)
 
 - Model, Variable, and Species
 
@@ -495,18 +499,16 @@ Detection:
 AIC: 93.19072 
 ```
 
-Predictions
+Again we can do see at individual variables:
 ========================================================
 class: small-code
-
-Again we can do see at individual variables:
 
 
 ```r
 responseplot.occu(batch = BatOccupancy2, spp = 3, variable = Burn.intensity.basal)
 ```
 
-![plot of chunk unnamed-chunk-17](Occupancy-figure/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-16](Occupancy-figure/unnamed-chunk-16-1.png)
 
 Predictions
 ========================================================
@@ -520,7 +522,7 @@ library(raster)
 plot(plumas.stack)
 ```
 
-![plot of chunk unnamed-chunk-18](Occupancy-figure/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-17](Occupancy-figure/unnamed-chunk-17-1.png)
 ***
 lets make it smaller
 
@@ -530,7 +532,7 @@ little.plumas <- stack(crop(plumas.stack, e))
 plot(little.plumas)
 ```
 
-![plot of chunk unnamed-chunk-19](Occupancy-figure/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-18](Occupancy-figure/unnamed-chunk-18-1.png)
 
 Predictions
 ========================================================
@@ -573,7 +575,7 @@ little.plumas)
 plot(Occupancy.stack)
 ```
 
-![plot of chunk unnamed-chunk-21](Occupancy-figure/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-20](Occupancy-figure/unnamed-chunk-20-1.png)
 
 Abundance and diversity using DiversityOccupancy
 ========================================================
@@ -595,13 +597,13 @@ summary(BatAbundance$species)
 ```
 
 ```
-       h            species.1         species.2       species.3       
- Min.   :0.7306   Min.   : 0.1821   Min.   :1.073   Min.   :0.000542  
- 1st Qu.:1.2688   1st Qu.: 0.4731   1st Qu.:1.073   1st Qu.:0.085348  
- Median :1.2688   Median : 0.6350   Median :1.325   Median :0.091487  
- Mean   :1.3168   Mean   : 1.7536   Mean   :2.087   Mean   :0.333119  
- 3rd Qu.:1.4404   3rd Qu.: 1.4990   3rd Qu.:2.708   3rd Qu.:0.408665  
- Max.   :1.6776   Max.   :19.1502   Max.   :9.461   Max.   :1.476396  
+       h           species.1         species.2       species.3       
+ Min.   :1.696   Min.   : 0.1821   Min.   :1.073   Min.   :0.000542  
+ 1st Qu.:2.398   1st Qu.: 0.4731   1st Qu.:1.073   1st Qu.:0.085348  
+ Median :2.420   Median : 0.6350   Median :1.325   Median :0.091487  
+ Mean   :2.353   Mean   : 1.7536   Mean   :2.087   Mean   :0.333119  
+ 3rd Qu.:2.447   3rd Qu.: 1.4990   3rd Qu.:2.708   3rd Qu.:0.408665  
+ Max.   :2.614   Max.   :19.1502   Max.   :9.461   Max.   :1.476396  
    species.4           species.5         species.6        
  Min.   : 0.000038   Min.   : 0.2464   Min.   : 0.000000  
  1st Qu.: 1.343394   1st Qu.: 0.2899   1st Qu.: 0.000000  
@@ -609,6 +611,27 @@ summary(BatAbundance$species)
  Mean   : 2.397644   Mean   : 1.0541   Mean   : 0.737486  
  3rd Qu.: 2.015600   3rd Qu.: 1.4820   3rd Qu.: 0.008663  
  Max.   :17.789285   Max.   :10.6545   Max.   :16.441510  
+   species.7           species.8        species.9        
+ Min.   : 0.000012   Min.   : 1.829   Min.   : 0.000000  
+ 1st Qu.: 1.218543   1st Qu.: 2.095   1st Qu.: 0.000189  
+ Median : 2.238009   Median : 2.249   Median : 0.541591  
+ Mean   : 2.969009   Mean   : 3.664   Mean   : 1.741684  
+ 3rd Qu.: 2.238009   3rd Qu.: 3.952   3rd Qu.: 0.541591  
+ Max.   :18.070975   Max.   :14.265   Max.   :18.810809  
+   species.10        species.11       species.12          species.13    
+ Min.   : 0.4309   Min.   :0.2316   Min.   : 0.000105   Min.   : 1.208  
+ 1st Qu.: 0.5594   1st Qu.:0.6008   1st Qu.: 0.382454   1st Qu.: 1.669  
+ Median : 0.5594   Median :0.6008   Median : 0.382454   Median : 1.669  
+ Mean   : 2.4271   Mean   :1.1235   Mean   : 1.401939   Mean   : 2.894  
+ 3rd Qu.: 1.4307   3rd Qu.:1.1922   3rd Qu.: 1.134847   3rd Qu.: 3.319  
+ Max.   :15.3103   Max.   :9.7570   Max.   :16.532914   Max.   :14.566  
+   species.14        species.15        species.16         species.17      
+ Min.   : 0.2582   Min.   :0.01365   Min.   : 0.07254   Min.   : 0.00000  
+ 1st Qu.: 1.1639   1st Qu.:0.11791   1st Qu.: 0.38360   1st Qu.: 0.04024  
+ Median : 1.2887   Median :0.12278   Median : 0.38360   Median : 0.04024  
+ Mean   : 1.9526   Mean   :0.34580   Mean   : 1.72885   Mean   : 1.85095  
+ 3rd Qu.: 1.2887   3rd Qu.:0.35698   3rd Qu.: 1.00365   3rd Qu.: 0.81726  
+ Max.   :18.3584   Max.   :2.23085   Max.   :17.17240   Max.   :17.23991  
 ```
 
 
@@ -621,7 +644,7 @@ responseplot is a ggplot object easy to [modify](http://zevross.com/blog/2014/08
 responseplot.abund(BatAbundance, spp = 1, variable = Burn.intensity.Canopy)
 ```
 
-![plot of chunk unnamed-chunk-24](Occupancy-figure/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-23](Occupancy-figure/unnamed-chunk-23-1.png)
 
 ***
 
@@ -632,7 +655,7 @@ K <- responseplot.abund(BatAbundance, spp = 1, variable = Burn.intensity.Canopy)
 K + geom_line(color = "red") + theme_dark()
 ```
 
-![plot of chunk unnamed-chunk-25](Occupancy-figure/unnamed-chunk-25-1.png)
+![plot of chunk unnamed-chunk-24](Occupancy-figure/unnamed-chunk-24-1.png)
 
 
 Modeling diversity from abundance
@@ -651,159 +674,255 @@ Initialization...
 Algorithm started...
 
 After 10 generations:
-Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
-Crit= -54.1378219271883
-Mean crit= -21.6273234470374
-Change in best IC: -10054.1378219272 / Change in mean IC: -10021.627323447
+Best model: Diversity~1+Distance.to.water+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -52.0648889944561
+Mean crit= -23.0874592331985
+Change in best IC: -10052.0648889945 / Change in mean IC: -10023.0874592332
 
 After 20 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -21.7838002776434
-Change in best IC: 0 / Change in mean IC: -0.156476830606021
+Mean crit= -26.1162904286894
+Change in best IC: -2.07293293273222 / Change in mean IC: -3.02883119549091
 
 After 30 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -23.8990107892228
-Change in best IC: 0 / Change in mean IC: -2.11521051157932
+Mean crit= -27.3416183573206
+Change in best IC: 0 / Change in mean IC: -1.22532792863121
 
 After 40 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -26.245211505578
-Change in best IC: 0 / Change in mean IC: -2.3462007163552
+Mean crit= -31.3760956091094
+Change in best IC: 0 / Change in mean IC: -4.03447725178883
 
 After 50 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -28.114358753057
-Change in best IC: 0 / Change in mean IC: -1.86914724747907
+Mean crit= -33.5809148824801
+Change in best IC: 0 / Change in mean IC: -2.20481927337073
 
 After 60 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -29.4565844685044
-Change in best IC: 0 / Change in mean IC: -1.34222571544737
+Mean crit= -33.606625575121
+Change in best IC: 0 / Change in mean IC: -0.0257106926408071
 
 After 70 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -31.9658134699832
-Change in best IC: 0 / Change in mean IC: -2.50922900147881
+Mean crit= -34.0636926314006
+Change in best IC: 0 / Change in mean IC: -0.457067056279683
 
 After 80 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -33.2457351435495
-Change in best IC: 0 / Change in mean IC: -1.27992167356625
+Mean crit= -35.368872443821
+Change in best IC: 0 / Change in mean IC: -1.30517981242036
 
 After 90 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -35.8256614788247
-Change in best IC: 0 / Change in mean IC: -2.57992633527521
+Mean crit= -36.1831813160029
+Change in best IC: 0 / Change in mean IC: -0.814308872181932
 
 After 100 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -36.6473671066928
-Change in best IC: 0 / Change in mean IC: -0.821705627868113
+Mean crit= -37.026039284821
+Change in best IC: 0 / Change in mean IC: -0.842857968818095
 
 After 110 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -38.3006372483668
-Change in best IC: 0 / Change in mean IC: -1.65327014167404
+Mean crit= -37.4617538920523
+Change in best IC: 0 / Change in mean IC: -0.435714607231297
 
 After 120 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -39.1330931816643
-Change in best IC: 0 / Change in mean IC: -0.832455933297496
+Mean crit= -37.8742056068967
+Change in best IC: 0 / Change in mean IC: -0.412451714844345
 
 After 130 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -41.6093083927287
-Change in best IC: 0 / Change in mean IC: -2.47621521106439
+Mean crit= -38.3136399553681
+Change in best IC: 0 / Change in mean IC: -0.439434348471458
 
 After 140 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -42.4128634938775
-Change in best IC: 0 / Change in mean IC: -0.803555101148767
+Mean crit= -38.3136399553681
+Change in best IC: 0 / Change in mean IC: 0
 
 After 150 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -43.1680803462903
-Change in best IC: 0 / Change in mean IC: -0.755216852412758
+Mean crit= -39.9304714375888
+Change in best IC: 0 / Change in mean IC: -1.61683148222068
 
 After 160 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -43.9842819268033
-Change in best IC: 0 / Change in mean IC: -0.816201580513045
+Mean crit= -41.1377045036642
+Change in best IC: 0 / Change in mean IC: -1.20723306607542
 
 After 170 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -43.9842819268033
-Change in best IC: 0 / Change in mean IC: 0
+Mean crit= -41.5543890425529
+Change in best IC: 0 / Change in mean IC: -0.416684538888688
 
 After 180 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -43.9868637312418
-Change in best IC: 0 / Change in mean IC: -0.00258180443845646
+Mean crit= -42.3982097248786
+Change in best IC: 0 / Change in mean IC: -0.84382068232572
 
 After 190 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -44.4113360813296
-Change in best IC: 0 / Change in mean IC: -0.424472350087846
+Mean crit= -42.3982097248786
+Change in best IC: 0 / Change in mean IC: 0
 
 After 200 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -44.7865502489356
-Change in best IC: 0 / Change in mean IC: -0.375214167606018
+Mean crit= -43.2138423896629
+Change in best IC: 0 / Change in mean IC: -0.815632664784239
 
 After 210 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -45.1357660260762
-Change in best IC: 0 / Change in mean IC: -0.34921577714055
+Mean crit= -43.2138423896629
+Change in best IC: 0 / Change in mean IC: 0
 
 After 220 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -45.1357660260762
+Mean crit= -43.2138423896629
 Change in best IC: 0 / Change in mean IC: 0
 
 After 230 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -45.1357660260762
-Change in best IC: 0 / Change in mean IC: 0
+Mean crit= -43.2430526903089
+Change in best IC: 0 / Change in mean IC: -0.0292103006460209
 
 After 240 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -45.1372698586277
-Change in best IC: 0 / Change in mean IC: -0.00150383255152775
+Mean crit= -44.000486844813
+Change in best IC: 0 / Change in mean IC: -0.757434154504097
 
 After 250 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -45.1382023376441
-Change in best IC: 0 / Change in mean IC: -0.000932479016384491
+Mean crit= -44.000486844813
+Change in best IC: 0 / Change in mean IC: 0
 
 After 260 generations:
 Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
 Crit= -54.1378219271883
-Mean crit= -45.1382023376441
+Mean crit= -44.3999566727291
+Change in best IC: 0 / Change in mean IC: -0.39946982791615
+
+After 270 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -44.8002509766616
+Change in best IC: 0 / Change in mean IC: -0.400294303932498
+
+After 280 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1481852378435
+Change in best IC: 0 / Change in mean IC: -0.347934261181848
+
+After 290 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.5433997857362
+Change in best IC: 0 / Change in mean IC: -0.395214547892714
+
+After 300 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.5433997857362
+Change in best IC: 0 / Change in mean IC: 0
+
+After 310 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.9037098234346
+Change in best IC: 0 / Change in mean IC: -0.36031003769839
+
+After 320 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.9037098234346
+Change in best IC: 0 / Change in mean IC: 0
+
+After 330 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.9037098234346
+Change in best IC: 0 / Change in mean IC: 0
+
+After 340 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.3036859815423
+Change in best IC: 0 / Change in mean IC: -0.399976158107677
+
+After 350 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.3036859815423
+Change in best IC: 0 / Change in mean IC: 0
+
+After 360 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.3036859815423
+Change in best IC: 0 / Change in mean IC: 0
+
+After 370 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.6999302953086
+Change in best IC: 0 / Change in mean IC: -0.396244313766317
+
+After 380 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.6999302953086
+Change in best IC: 0 / Change in mean IC: 0
+
+After 390 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.6999302953086
+Change in best IC: 0 / Change in mean IC: 0
+
+After 400 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.6999302953086
+Change in best IC: 0 / Change in mean IC: 0
+
+After 410 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.6999302953086
+Change in best IC: 0 / Change in mean IC: 0
+
+After 420 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -46.6999302953086
 Improvements in best and average IC have bebingo en below the specified goals.
 Algorithm is declared to have converged.
 Completed.
@@ -832,7 +951,7 @@ glm.diversity$Best_model
 
 ```
 Diversity ~ 1 + Existing.vegetation + Burn.intensity.soil + Burn.intensity.Canopy
-<environment: 0x8f9d358>
+<environment: 0xaefa900>
 ```
 
 Modeling diversity from abundance
@@ -844,7 +963,7 @@ class: small-code
 responseplot.diver(glm.diversity, variable = Burn.intensity.Canopy)
 ```
 
-![plot of chunk unnamed-chunk-28](Occupancy-figure/unnamed-chunk-28-1.png)
+![plot of chunk unnamed-chunk-27](Occupancy-figure/unnamed-chunk-27-1.png)
 
 Selecting conservation areas based on diversity and abundance
 ========================================================
@@ -875,7 +994,7 @@ FALSE, FALSE, FALSE, FALSE,FALSE,FALSE))
   doing row 7000 of 7366 
 ```
 
-![plot of chunk unnamed-chunk-29](Occupancy-figure/unnamed-chunk-29-1.png)
+![plot of chunk unnamed-chunk-28](Occupancy-figure/unnamed-chunk-28-1.png)
 
 Selecting conservation areas
 ========================================================
@@ -894,7 +1013,7 @@ names(Selected.area)
 plot(Selected.area$priority.area, colNA = "black")
 ```
 
-![plot of chunk unnamed-chunk-30](Occupancy-figure/unnamed-chunk-30-1.png)
+![plot of chunk unnamed-chunk-29](Occupancy-figure/unnamed-chunk-29-1.png)
 
 Selecting conservation areas
 ========================================================
@@ -905,7 +1024,7 @@ class: small-code
 plot(Selected.area$diversity.raster, colNA = "black")
 ```
 
-![plot of chunk unnamed-chunk-31](Occupancy-figure/unnamed-chunk-31-1.png)
+![plot of chunk unnamed-chunk-30](Occupancy-figure/unnamed-chunk-30-1.png)
 
 ***
 
@@ -914,7 +1033,7 @@ plot(Selected.area$diversity.raster, colNA = "black")
 plot(Selected.area$species, colNA = "black")
 ```
 
-![plot of chunk unnamed-chunk-32](Occupancy-figure/unnamed-chunk-32-1.png)
+![plot of chunk unnamed-chunk-31](Occupancy-figure/unnamed-chunk-31-1.png)
 
 
 Package unmarked
@@ -987,7 +1106,7 @@ SimOccuMyYu <- unmarkedFrameOccu(y = MyyuOccupancy, siteCovs = sampling.cov , ob
 plot(SimOccuMyYu)
 ```
 
-![plot of chunk unnamed-chunk-35](Occupancy-figure/unnamed-chunk-35-1.png)
+![plot of chunk unnamed-chunk-34](Occupancy-figure/unnamed-chunk-34-1.png)
 
 Occupancy modeling with unmarked
 ========================================================
@@ -1036,7 +1155,7 @@ class: small-code
 plot(model.Occu.My.Yu)
 ```
 
-![plot of chunk unnamed-chunk-37](Occupancy-figure/unnamed-chunk-37-1.png)
+![plot of chunk unnamed-chunk-36](Occupancy-figure/unnamed-chunk-36-1.png)
 
 Model selection
 ========================================================
