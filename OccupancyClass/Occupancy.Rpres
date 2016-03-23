@@ -266,7 +266,7 @@ names(DetCov) <- c("julian", "maxhum", "maxtemp")
 names(DetCov)
 ```
 
-Modeling using DiversityOccupancy
+Occupancy using DiversityOccupancy
 ========================================================
 incremental: true
 
@@ -280,7 +280,7 @@ batchoccu(pres, sitecov, obscov, spp, form)
 
 Remember, we need p to calculate psi (detection before occupancy)
 
-Modeling using DiversityOccupancy
+Occupancy using DiversityOccupancy
 ========================================================
 class: small-code
 
@@ -297,7 +297,7 @@ summary(BatOccupancy$fit)
 
 
 
-Modeling using DiversityOccupancy
+Occupancy using DiversityOccupancy
 ========================================================
 class: small-code
 
@@ -313,10 +313,7 @@ class: small-code
 responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
 ```
 
-***
-
 - Model, Variable, and Species
-- responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
 
 
 Model selection
@@ -349,9 +346,114 @@ library(raster)
 plot(plumas.stack)
 ```
 ***
+lets make it smaller
+```{r, echo=TRUE}
+e <- extent(-120.9305, -120.4498, 40.06769, 40.29006)
+little.plumas <- stack(crop(plumas.stack, e))
+plot(little.plumas)
+```
+
+Predictions
+========================================================
+class: small-code
 
 ```{r, echo=TRUE}
 Occupancy.stack <- occupancy.predict(batch = BatOccupancy2, new.data =
-plumas.stack)
+little.plumas)
+```
+
+***
+
+```{r, echo=TRUE}
 plot(Occupancy.stack)
+```
+
+Abundance and diversity using DiversityOccupancy
+========================================================
+class: small-code
+
+```{r, echo=TRUE}
+BatAbundance <-diversityoccu(pres = BatOccu, sitecov = sampling.cov, obscov = Dailycov, spp = 17, form = ~ Julian + Meanhum + Meantemp + sdhum + sdtemp ~ Burn.intensity.soil + I(Burn.intensity.soil^2) + Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2))
+names(BatAbundance)
+```
+
+```{r}
+summary(BatAbundance$species)
+```
+
+
+========================================================
+class: small-code
+
+responseplot is a ggplot object easy to [modify](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)
+```{r, echo=TRUE}
+responseplot.abund(BatAbundance, spp = 1, variable = Burn.intensity.Canopy)
+```
+
+***
+
+```{r, echo=TRUE}
+library(ggplot2)
+K <- responseplot.abund(BatAbundance, spp = 1, variable = Burn.intensity.Canopy)
+K + geom_line(color = "red") + theme_dark()
+```
+
+
+Modeling diversity from abundance
+========================================================
+class: small-code
+
+```{r}
+glm.diversity <- model.diversity(BatAbundance, method = "g")
+```
+
+Modeling diversity from abundance
+========================================================
+class: small-code
+
+```{r}
+kable(glm.diversity$Table)
+glm.diversity$Best_model
+```
+
+Modeling diversity from abundance
+========================================================
+class: small-code
+
+```{r}
+responseplot.diver(glm.diversity, variable = Burn.intensity.Canopy)
+```
+
+Selecting conservation areas based on diversity and abundance
+========================================================
+class: small-code
+
+```{r}
+Selected.area <- diversity.predict(model = BatAbundance, diverse = glm.diversity,
+new.data = little.plumas, quantile.nth = 0.85, species =
+c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,
+FALSE, FALSE, FALSE, FALSE,FALSE,FALSE))
+```
+
+Selecting conservation areas
+========================================================
+class: small-code
+
+```{r}
+names(Selected.area)
+plot(Selected.area$priority.area, colNA = "black")
+```
+
+Selecting conservation areas
+========================================================
+class: small-code
+
+```{r}
+plot(Selected.area$diversity.raster, colNA = "black")
+```
+
+***
+
+```{r}
+plot(Selected.area$species, colNA = "black")
 ```

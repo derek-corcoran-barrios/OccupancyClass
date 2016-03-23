@@ -7,7 +7,7 @@ font-size: 1em;
 Occupancy Modeling
 ========================================================
 author: Derek Corcoran
-date: 2016-03-22
+date: 2016-03-23
 autosize: true
 transition: rotate
 
@@ -303,7 +303,7 @@ names(DetCov)
 [1] "julian"  "maxhum"  "maxtemp"
 ```
 
-Modeling using DiversityOccupancy
+Occupancy using DiversityOccupancy
 ========================================================
 incremental: true
 
@@ -317,7 +317,7 @@ batchoccu(pres, sitecov, obscov, spp, form)
 
 Remember, we need p to calculate psi (detection before occupancy)
 
-Modeling using DiversityOccupancy
+Occupancy using DiversityOccupancy
 ========================================================
 class: small-code
 
@@ -377,7 +377,7 @@ summary(BatOccupancy$fit)
 
 
 
-Modeling using DiversityOccupancy
+Occupancy using DiversityOccupancy
 ========================================================
 class: small-code
 
@@ -424,10 +424,7 @@ responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil
 
 ![plot of chunk unnamed-chunk-15](Occupancy-figure/unnamed-chunk-15-1.png)
 
-***
-
 - Model, Variable, and Species
-- responseplot.occu(batch = BatOccupancy, spp = 15, variable = Burn.intensity.soil)
 
 
 Model selection
@@ -484,342 +481,396 @@ plot(plumas.stack)
 
 ![plot of chunk unnamed-chunk-18](Occupancy-figure/unnamed-chunk-18-1.png)
 ***
+lets make it smaller
+
+```r
+e <- extent(-120.9305, -120.4498, 40.06769, 40.29006)
+little.plumas <- stack(crop(plumas.stack, e))
+plot(little.plumas)
+```
+
+![plot of chunk unnamed-chunk-19](Occupancy-figure/unnamed-chunk-19-1.png)
+
+Predictions
+========================================================
+class: small-code
 
 
 ```r
 Occupancy.stack <- occupancy.predict(batch = BatOccupancy2, new.data =
-plumas.stack)
+little.plumas)
 ```
 
 ```
-  doing row 1000 of 108500 
-  doing row 2000 of 108500 
-  doing row 3000 of 108500 
-  doing row 4000 of 108500 
-  doing row 5000 of 108500 
-  doing row 6000 of 108500 
-  doing row 7000 of 108500 
-  doing row 8000 of 108500 
-  doing row 9000 of 108500 
-  doing row 10000 of 108500 
-  doing row 11000 of 108500 
-  doing row 12000 of 108500 
-  doing row 13000 of 108500 
-  doing row 14000 of 108500 
-  doing row 15000 of 108500 
-  doing row 16000 of 108500 
-  doing row 17000 of 108500 
-  doing row 18000 of 108500 
-  doing row 19000 of 108500 
-  doing row 20000 of 108500 
-  doing row 21000 of 108500 
-  doing row 22000 of 108500 
-  doing row 23000 of 108500 
-  doing row 24000 of 108500 
-  doing row 25000 of 108500 
-  doing row 26000 of 108500 
-  doing row 27000 of 108500 
-  doing row 28000 of 108500 
-  doing row 29000 of 108500 
-  doing row 30000 of 108500 
-  doing row 31000 of 108500 
-  doing row 32000 of 108500 
-  doing row 33000 of 108500 
-  doing row 34000 of 108500 
-  doing row 35000 of 108500 
-  doing row 36000 of 108500 
-  doing row 37000 of 108500 
-  doing row 38000 of 108500 
-  doing row 39000 of 108500 
-  doing row 40000 of 108500 
-  doing row 41000 of 108500 
-  doing row 42000 of 108500 
-  doing row 43000 of 108500 
-  doing row 44000 of 108500 
-  doing row 45000 of 108500 
-  doing row 46000 of 108500 
-  doing row 47000 of 108500 
-  doing row 48000 of 108500 
-  doing row 49000 of 108500 
-  doing row 50000 of 108500 
-  doing row 51000 of 108500 
-  doing row 52000 of 108500 
-  doing row 53000 of 108500 
-  doing row 54000 of 108500 
-  doing row 55000 of 108500 
-  doing row 56000 of 108500 
-  doing row 57000 of 108500 
-  doing row 58000 of 108500 
-  doing row 59000 of 108500 
-  doing row 60000 of 108500 
-  doing row 61000 of 108500 
-  doing row 62000 of 108500 
-  doing row 63000 of 108500 
-  doing row 64000 of 108500 
-  doing row 65000 of 108500 
-  doing row 66000 of 108500 
-  doing row 67000 of 108500 
-  doing row 68000 of 108500 
-  doing row 69000 of 108500 
-  doing row 70000 of 108500 
-  doing row 71000 of 108500 
-  doing row 72000 of 108500 
-  doing row 73000 of 108500 
-  doing row 74000 of 108500 
-  doing row 75000 of 108500 
-  doing row 76000 of 108500 
-  doing row 77000 of 108500 
-  doing row 78000 of 108500 
-  doing row 79000 of 108500 
-  doing row 80000 of 108500 
-  doing row 81000 of 108500 
-  doing row 82000 of 108500 
-  doing row 83000 of 108500 
-  doing row 84000 of 108500 
-  doing row 85000 of 108500 
-  doing row 86000 of 108500 
-  doing row 87000 of 108500 
-  doing row 88000 of 108500 
-  doing row 89000 of 108500 
-  doing row 90000 of 108500 
-  doing row 91000 of 108500 
-  doing row 92000 of 108500 
-  doing row 93000 of 108500 
-  doing row 94000 of 108500 
-  doing row 95000 of 108500 
-  doing row 96000 of 108500 
-  doing row 97000 of 108500 
-  doing row 98000 of 108500 
-  doing row 99000 of 108500 
-  doing row 100000 of 108500 
-  doing row 101000 of 108500 
-  doing row 102000 of 108500 
-  doing row 103000 of 108500 
-  doing row 104000 of 108500 
-  doing row 105000 of 108500 
-  doing row 106000 of 108500 
-  doing row 107000 of 108500 
-  doing row 108000 of 108500 
-  doing row 1000 of 108500 
-  doing row 2000 of 108500 
-  doing row 3000 of 108500 
-  doing row 4000 of 108500 
-  doing row 5000 of 108500 
-  doing row 6000 of 108500 
-  doing row 7000 of 108500 
-  doing row 8000 of 108500 
-  doing row 9000 of 108500 
-  doing row 10000 of 108500 
-  doing row 11000 of 108500 
-  doing row 12000 of 108500 
-  doing row 13000 of 108500 
-  doing row 14000 of 108500 
-  doing row 15000 of 108500 
-  doing row 16000 of 108500 
-  doing row 17000 of 108500 
-  doing row 18000 of 108500 
-  doing row 19000 of 108500 
-  doing row 20000 of 108500 
-  doing row 21000 of 108500 
-  doing row 22000 of 108500 
-  doing row 23000 of 108500 
-  doing row 24000 of 108500 
-  doing row 25000 of 108500 
-  doing row 26000 of 108500 
-  doing row 27000 of 108500 
-  doing row 28000 of 108500 
-  doing row 29000 of 108500 
-  doing row 30000 of 108500 
-  doing row 31000 of 108500 
-  doing row 32000 of 108500 
-  doing row 33000 of 108500 
-  doing row 34000 of 108500 
-  doing row 35000 of 108500 
-  doing row 36000 of 108500 
-  doing row 37000 of 108500 
-  doing row 38000 of 108500 
-  doing row 39000 of 108500 
-  doing row 40000 of 108500 
-  doing row 41000 of 108500 
-  doing row 42000 of 108500 
-  doing row 43000 of 108500 
-  doing row 44000 of 108500 
-  doing row 45000 of 108500 
-  doing row 46000 of 108500 
-  doing row 47000 of 108500 
-  doing row 48000 of 108500 
-  doing row 49000 of 108500 
-  doing row 50000 of 108500 
-  doing row 51000 of 108500 
-  doing row 52000 of 108500 
-  doing row 53000 of 108500 
-  doing row 54000 of 108500 
-  doing row 55000 of 108500 
-  doing row 56000 of 108500 
-  doing row 57000 of 108500 
-  doing row 58000 of 108500 
-  doing row 59000 of 108500 
-  doing row 60000 of 108500 
-  doing row 61000 of 108500 
-  doing row 62000 of 108500 
-  doing row 63000 of 108500 
-  doing row 64000 of 108500 
-  doing row 65000 of 108500 
-  doing row 66000 of 108500 
-  doing row 67000 of 108500 
-  doing row 68000 of 108500 
-  doing row 69000 of 108500 
-  doing row 70000 of 108500 
-  doing row 71000 of 108500 
-  doing row 72000 of 108500 
-  doing row 73000 of 108500 
-  doing row 74000 of 108500 
-  doing row 75000 of 108500 
-  doing row 76000 of 108500 
-  doing row 77000 of 108500 
-  doing row 78000 of 108500 
-  doing row 79000 of 108500 
-  doing row 80000 of 108500 
-  doing row 81000 of 108500 
-  doing row 82000 of 108500 
-  doing row 83000 of 108500 
-  doing row 84000 of 108500 
-  doing row 85000 of 108500 
-  doing row 86000 of 108500 
-  doing row 87000 of 108500 
-  doing row 88000 of 108500 
-  doing row 89000 of 108500 
-  doing row 90000 of 108500 
-  doing row 91000 of 108500 
-  doing row 92000 of 108500 
-  doing row 93000 of 108500 
-  doing row 94000 of 108500 
-  doing row 95000 of 108500 
-  doing row 96000 of 108500 
-  doing row 97000 of 108500 
-  doing row 98000 of 108500 
-  doing row 99000 of 108500 
-  doing row 100000 of 108500 
-  doing row 101000 of 108500 
-  doing row 102000 of 108500 
-  doing row 103000 of 108500 
-  doing row 104000 of 108500 
-  doing row 105000 of 108500 
-  doing row 106000 of 108500 
-  doing row 107000 of 108500 
-  doing row 108000 of 108500 
-  doing row 1000 of 108500 
-  doing row 2000 of 108500 
-  doing row 3000 of 108500 
-  doing row 4000 of 108500 
-  doing row 5000 of 108500 
-  doing row 6000 of 108500 
-  doing row 7000 of 108500 
-  doing row 8000 of 108500 
-  doing row 9000 of 108500 
-  doing row 10000 of 108500 
-  doing row 11000 of 108500 
-  doing row 12000 of 108500 
-  doing row 13000 of 108500 
-  doing row 14000 of 108500 
-  doing row 15000 of 108500 
-  doing row 16000 of 108500 
-  doing row 17000 of 108500 
-  doing row 18000 of 108500 
-  doing row 19000 of 108500 
-  doing row 20000 of 108500 
-  doing row 21000 of 108500 
-  doing row 22000 of 108500 
-  doing row 23000 of 108500 
-  doing row 24000 of 108500 
-  doing row 25000 of 108500 
-  doing row 26000 of 108500 
-  doing row 27000 of 108500 
-  doing row 28000 of 108500 
-  doing row 29000 of 108500 
-  doing row 30000 of 108500 
-  doing row 31000 of 108500 
-  doing row 32000 of 108500 
-  doing row 33000 of 108500 
-  doing row 34000 of 108500 
-  doing row 35000 of 108500 
-  doing row 36000 of 108500 
-  doing row 37000 of 108500 
-  doing row 38000 of 108500 
-  doing row 39000 of 108500 
-  doing row 40000 of 108500 
-  doing row 41000 of 108500 
-  doing row 42000 of 108500 
-  doing row 43000 of 108500 
-  doing row 44000 of 108500 
-  doing row 45000 of 108500 
-  doing row 46000 of 108500 
-  doing row 47000 of 108500 
-  doing row 48000 of 108500 
-  doing row 49000 of 108500 
-  doing row 50000 of 108500 
-  doing row 51000 of 108500 
-  doing row 52000 of 108500 
-  doing row 53000 of 108500 
-  doing row 54000 of 108500 
-  doing row 55000 of 108500 
-  doing row 56000 of 108500 
-  doing row 57000 of 108500 
-  doing row 58000 of 108500 
-  doing row 59000 of 108500 
-  doing row 60000 of 108500 
-  doing row 61000 of 108500 
-  doing row 62000 of 108500 
-  doing row 63000 of 108500 
-  doing row 64000 of 108500 
-  doing row 65000 of 108500 
-  doing row 66000 of 108500 
-  doing row 67000 of 108500 
-  doing row 68000 of 108500 
-  doing row 69000 of 108500 
-  doing row 70000 of 108500 
-  doing row 71000 of 108500 
-  doing row 72000 of 108500 
-  doing row 73000 of 108500 
-  doing row 74000 of 108500 
-  doing row 75000 of 108500 
-  doing row 76000 of 108500 
-  doing row 77000 of 108500 
-  doing row 78000 of 108500 
-  doing row 79000 of 108500 
-  doing row 80000 of 108500 
-  doing row 81000 of 108500 
-  doing row 82000 of 108500 
-  doing row 83000 of 108500 
-  doing row 84000 of 108500 
-  doing row 85000 of 108500 
-  doing row 86000 of 108500 
-  doing row 87000 of 108500 
-  doing row 88000 of 108500 
-  doing row 89000 of 108500 
-  doing row 90000 of 108500 
-  doing row 91000 of 108500 
-  doing row 92000 of 108500 
-  doing row 93000 of 108500 
-  doing row 94000 of 108500 
-  doing row 95000 of 108500 
-  doing row 96000 of 108500 
-  doing row 97000 of 108500 
-  doing row 98000 of 108500 
-  doing row 99000 of 108500 
-  doing row 100000 of 108500 
-  doing row 101000 of 108500 
-  doing row 102000 of 108500 
-  doing row 103000 of 108500 
-  doing row 104000 of 108500 
-  doing row 105000 of 108500 
-  doing row 106000 of 108500 
-  doing row 107000 of 108500 
-  doing row 108000 of 108500 
+  doing row 1000 of 7366 
+  doing row 2000 of 7366 
+  doing row 3000 of 7366 
+  doing row 4000 of 7366 
+  doing row 5000 of 7366 
+  doing row 6000 of 7366 
+  doing row 7000 of 7366 
+  doing row 1000 of 7366 
+  doing row 2000 of 7366 
+  doing row 3000 of 7366 
+  doing row 4000 of 7366 
+  doing row 5000 of 7366 
+  doing row 6000 of 7366 
+  doing row 7000 of 7366 
+  doing row 1000 of 7366 
+  doing row 2000 of 7366 
+  doing row 3000 of 7366 
+  doing row 4000 of 7366 
+  doing row 5000 of 7366 
+  doing row 6000 of 7366 
+  doing row 7000 of 7366 
 ```
+
+***
+
 
 ```r
 plot(Occupancy.stack)
 ```
 
-![plot of chunk unnamed-chunk-19](Occupancy-figure/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-21](Occupancy-figure/unnamed-chunk-21-1.png)
+
+Abundance and diversity using DiversityOccupancy
+========================================================
+class: small-code
+
+
+```r
+BatAbundance <-diversityoccu(pres = BatOccu, sitecov = sampling.cov, obscov = Dailycov, spp = 17, form = ~ Julian + Meanhum + Meantemp + sdhum + sdtemp ~ Burn.intensity.soil + I(Burn.intensity.soil^2) + Burn.intensity.Canopy + I(Burn.intensity.Canopy^2) + Burn.intensity.basal + I(Burn.intensity.basal^2))
+names(BatAbundance)
+```
+
+```
+[1] "Covs"      "models"    "Diversity" "species"  
+```
+
+
+```r
+summary(BatAbundance$species)
+```
+
+```
+       h            species.1         species.2       species.3       
+ Min.   :0.7306   Min.   : 0.1821   Min.   :1.073   Min.   :0.000542  
+ 1st Qu.:1.2688   1st Qu.: 0.4731   1st Qu.:1.073   1st Qu.:0.085348  
+ Median :1.2688   Median : 0.6350   Median :1.325   Median :0.091487  
+ Mean   :1.3168   Mean   : 1.7536   Mean   :2.087   Mean   :0.333119  
+ 3rd Qu.:1.4404   3rd Qu.: 1.4990   3rd Qu.:2.708   3rd Qu.:0.408665  
+ Max.   :1.6776   Max.   :19.1502   Max.   :9.461   Max.   :1.476396  
+   species.4           species.5         species.6        
+ Min.   : 0.000038   Min.   : 0.2464   Min.   : 0.000000  
+ 1st Qu.: 1.343394   1st Qu.: 0.2899   1st Qu.: 0.000000  
+ Median : 1.721218   Median : 0.2952   Median : 0.000000  
+ Mean   : 2.397644   Mean   : 1.0541   Mean   : 0.737486  
+ 3rd Qu.: 2.015600   3rd Qu.: 1.4820   3rd Qu.: 0.008663  
+ Max.   :17.789285   Max.   :10.6545   Max.   :16.441510  
+```
+
+
+========================================================
+class: small-code
+
+responseplot is a ggplot object easy to [modify](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)
+
+```r
+responseplot.abund(BatAbundance, spp = 1, variable = Burn.intensity.Canopy)
+```
+
+![plot of chunk unnamed-chunk-24](Occupancy-figure/unnamed-chunk-24-1.png)
+
+***
+
+
+```r
+library(ggplot2)
+K <- responseplot.abund(BatAbundance, spp = 1, variable = Burn.intensity.Canopy)
+K + geom_line(color = "red") + theme_dark()
+```
+
+![plot of chunk unnamed-chunk-25](Occupancy-figure/unnamed-chunk-25-1.png)
+
+
+Modeling diversity from abundance
+========================================================
+class: small-code
+
+
+```r
+glm.diversity <- model.diversity(BatAbundance, method = "g")
+```
+
+```
+Initialization...
+TASK: Genetic algorithm in the candidate set.
+Initialization...
+Algorithm started...
+
+After 10 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -21.6273234470374
+Change in best IC: -10054.1378219272 / Change in mean IC: -10021.627323447
+
+After 20 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -21.7838002776434
+Change in best IC: 0 / Change in mean IC: -0.156476830606021
+
+After 30 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -23.8990107892228
+Change in best IC: 0 / Change in mean IC: -2.11521051157932
+
+After 40 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -26.245211505578
+Change in best IC: 0 / Change in mean IC: -2.3462007163552
+
+After 50 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -28.114358753057
+Change in best IC: 0 / Change in mean IC: -1.86914724747907
+
+After 60 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -29.4565844685044
+Change in best IC: 0 / Change in mean IC: -1.34222571544737
+
+After 70 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -31.9658134699832
+Change in best IC: 0 / Change in mean IC: -2.50922900147881
+
+After 80 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -33.2457351435495
+Change in best IC: 0 / Change in mean IC: -1.27992167356625
+
+After 90 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -35.8256614788247
+Change in best IC: 0 / Change in mean IC: -2.57992633527521
+
+After 100 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -36.6473671066928
+Change in best IC: 0 / Change in mean IC: -0.821705627868113
+
+After 110 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -38.3006372483668
+Change in best IC: 0 / Change in mean IC: -1.65327014167404
+
+After 120 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -39.1330931816643
+Change in best IC: 0 / Change in mean IC: -0.832455933297496
+
+After 130 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -41.6093083927287
+Change in best IC: 0 / Change in mean IC: -2.47621521106439
+
+After 140 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -42.4128634938775
+Change in best IC: 0 / Change in mean IC: -0.803555101148767
+
+After 150 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -43.1680803462903
+Change in best IC: 0 / Change in mean IC: -0.755216852412758
+
+After 160 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -43.9842819268033
+Change in best IC: 0 / Change in mean IC: -0.816201580513045
+
+After 170 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -43.9842819268033
+Change in best IC: 0 / Change in mean IC: 0
+
+After 180 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -43.9868637312418
+Change in best IC: 0 / Change in mean IC: -0.00258180443845646
+
+After 190 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -44.4113360813296
+Change in best IC: 0 / Change in mean IC: -0.424472350087846
+
+After 200 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -44.7865502489356
+Change in best IC: 0 / Change in mean IC: -0.375214167606018
+
+After 210 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1357660260762
+Change in best IC: 0 / Change in mean IC: -0.34921577714055
+
+After 220 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1357660260762
+Change in best IC: 0 / Change in mean IC: 0
+
+After 230 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1357660260762
+Change in best IC: 0 / Change in mean IC: 0
+
+After 240 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1372698586277
+Change in best IC: 0 / Change in mean IC: -0.00150383255152775
+
+After 250 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1382023376441
+Change in best IC: 0 / Change in mean IC: -0.000932479016384491
+
+After 260 generations:
+Best model: Diversity~1+Existing.vegetation+Burn.intensity.soil+Burn.intensity.Canopy
+Crit= -54.1378219271883
+Mean crit= -45.1382023376441
+Improvements in best and average IC have bebingo en below the specified goals.
+Algorithm is declared to have converged.
+Completed.
+```
+
+Modeling diversity from abundance
+========================================================
+class: small-code
+
+
+```r
+kable(glm.diversity$Table)
+```
+
+
+
+|model                                                                                                |      aicc|   weights| Delta.AICc|
+|:----------------------------------------------------------------------------------------------------|---------:|---------:|----------:|
+|Diversity ~ 1 + Existing.vegetation + Burn.intensity.soil + Burn.intensity.Canopy                    | -54.13782| 0.4985534|   0.000000|
+|Diversity ~ 1 + Existing.vegetation + Altitude + Burn.intensity.soil + Burn.intensity.Canopy         | -52.96446| 0.2772807|   1.173361|
+|Diversity ~ 1 + Distance.to.road + Existing.vegetation + Burn.intensity.soil + Burn.intensity.Canopy | -52.53917| 0.2241658|   1.598649|
+
+```r
+glm.diversity$Best_model
+```
+
+```
+Diversity ~ 1 + Existing.vegetation + Burn.intensity.soil + Burn.intensity.Canopy
+<environment: 0x8f9d358>
+```
+
+Modeling diversity from abundance
+========================================================
+class: small-code
+
+
+```r
+responseplot.diver(glm.diversity, variable = Burn.intensity.Canopy)
+```
+
+![plot of chunk unnamed-chunk-28](Occupancy-figure/unnamed-chunk-28-1.png)
+
+Selecting conservation areas based on diversity and abundance
+========================================================
+class: small-code
+
+
+```r
+Selected.area <- diversity.predict(model = BatAbundance, diverse = glm.diversity,
+new.data = little.plumas, quantile.nth = 0.85, species =
+c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,
+FALSE, FALSE, FALSE, FALSE,FALSE,FALSE))
+```
+
+```
+  doing row 1000 of 7366 
+  doing row 2000 of 7366 
+  doing row 3000 of 7366 
+  doing row 4000 of 7366 
+  doing row 5000 of 7366 
+  doing row 6000 of 7366 
+  doing row 7000 of 7366 
+  doing row 1000 of 7366 
+  doing row 2000 of 7366 
+  doing row 3000 of 7366 
+  doing row 4000 of 7366 
+  doing row 5000 of 7366 
+  doing row 6000 of 7366 
+  doing row 7000 of 7366 
+```
+
+![plot of chunk unnamed-chunk-29](Occupancy-figure/unnamed-chunk-29-1.png)
+
+Selecting conservation areas
+========================================================
+class: small-code
+
+
+```r
+names(Selected.area)
+```
+
+```
+[1] "species"          "diversity.raster" "priority.area"   
+```
+
+```r
+plot(Selected.area$priority.area, colNA = "black")
+```
+
+![plot of chunk unnamed-chunk-30](Occupancy-figure/unnamed-chunk-30-1.png)
+
+Selecting conservation areas
+========================================================
+class: small-code
+
+
+```r
+plot(Selected.area$diversity.raster, colNA = "black")
+```
+
+![plot of chunk unnamed-chunk-31](Occupancy-figure/unnamed-chunk-31-1.png)
+
+***
+
+
+```r
+plot(Selected.area$species, colNA = "black")
+```
+
+![plot of chunk unnamed-chunk-32](Occupancy-figure/unnamed-chunk-32-1.png)
