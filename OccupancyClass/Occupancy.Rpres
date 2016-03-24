@@ -484,11 +484,16 @@ FALSE, FALSE, FALSE, FALSE,FALSE,FALSE))
 Selecting conservation areas
 ========================================================
 class: small-code
+```{r}
+plot(Selected.area$priority.area, colNA = "black")
+```
+***
+You get a KMZ file in your working directory to see it in google earth!
 
 ```{r}
 names(Selected.area)
-plot(Selected.area$priority.area, colNA = "black")
 ```
+
 
 Selecting conservation areas
 ========================================================
@@ -519,7 +524,7 @@ Cons
 - More work to use data
 - No Diversity modeling
 - No graphical output
-- No automatica model selection
+- No automatic model selection
 
 ***
 
@@ -584,3 +589,9 @@ ms
 ```
 
 Set every model you need
+
+Thank you!!
+========================================================
+
+
+Please respond the following [survey](https://www.surveymonkey.com/r/J8MYNW5), it is important for me to get feedback from you

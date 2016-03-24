@@ -1000,6 +1000,14 @@ Selecting conservation areas
 ========================================================
 class: small-code
 
+```r
+plot(Selected.area$priority.area, colNA = "black")
+```
+
+![plot of chunk unnamed-chunk-29](Occupancy-figure/unnamed-chunk-29-1.png)
+***
+You get a KMZ file in your working directory to see it in google earth!
+
 
 ```r
 names(Selected.area)
@@ -1009,11 +1017,6 @@ names(Selected.area)
 [1] "species"          "diversity.raster" "priority.area"   
 ```
 
-```r
-plot(Selected.area$priority.area, colNA = "black")
-```
-
-![plot of chunk unnamed-chunk-29](Occupancy-figure/unnamed-chunk-29-1.png)
 
 Selecting conservation areas
 ========================================================
@@ -1024,7 +1027,7 @@ class: small-code
 plot(Selected.area$diversity.raster, colNA = "black")
 ```
 
-![plot of chunk unnamed-chunk-30](Occupancy-figure/unnamed-chunk-30-1.png)
+![plot of chunk unnamed-chunk-31](Occupancy-figure/unnamed-chunk-31-1.png)
 
 ***
 
@@ -1033,7 +1036,7 @@ plot(Selected.area$diversity.raster, colNA = "black")
 plot(Selected.area$species, colNA = "black")
 ```
 
-![plot of chunk unnamed-chunk-31](Occupancy-figure/unnamed-chunk-31-1.png)
+![plot of chunk unnamed-chunk-32](Occupancy-figure/unnamed-chunk-32-1.png)
 
 
 Package unmarked
@@ -1050,7 +1053,7 @@ Cons
 - More work to use data
 - No Diversity modeling
 - No graphical output
-- No automatica model selection
+- No automatic model selection
 
 ***
 
@@ -1106,7 +1109,7 @@ SimOccuMyYu <- unmarkedFrameOccu(y = MyyuOccupancy, siteCovs = sampling.cov , ob
 plot(SimOccuMyYu)
 ```
 
-![plot of chunk unnamed-chunk-34](Occupancy-figure/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-35](Occupancy-figure/unnamed-chunk-35-1.png)
 
 Occupancy modeling with unmarked
 ========================================================
@@ -1155,7 +1158,7 @@ class: small-code
 plot(model.Occu.My.Yu)
 ```
 
-![plot of chunk unnamed-chunk-36](Occupancy-figure/unnamed-chunk-36-1.png)
+![plot of chunk unnamed-chunk-37](Occupancy-figure/unnamed-chunk-37-1.png)
 
 Model selection
 ========================================================
@@ -1178,3 +1181,9 @@ Null       2 106.24  2.26  0.16     1.00 0.00
 ```
 
 Set every model you need
+
+Thank you!!
+========================================================
+
+
+Please respond the following [survey](https://www.surveymonkey.com/r/J8MYNW5), it is important for me to get feedback from you
